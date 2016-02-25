@@ -175,10 +175,149 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 
 // Create Solar System
 var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
 generateVertexColors( geometry );
-var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-var sun = new THREE.Mesh( geometry, material );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun = new THREE.Mesh( geometry, normalMaterial );
 scene.add( sun );
+
+var mercuryGeo = new THREE.SphereGeometry(2,15,15);
+var mercuryMat = new THREE.MeshPhongMaterial(); 
+var mercury = new THREE.Mesh(mercuryGeo, mercuryMat); 
+scene.add(mercury); // add Mercury
+
+var t = 0;
+
+var segmentCount = 32,
+    radius = 10,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit1 = new THREE.Line(geometry, material)
+scene.add(orbit1);
+
+var segmentCount = 32,
+    radius = 15,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit2 = new THREE.Line(geometry, material)
+scene.add(orbit2);
+
+var segmentCount = 32,
+    radius = 20,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit3 = new THREE.Line(geometry, material)
+scene.add(orbit3);
+
+var segmentCount = 32,
+    radius = 25,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit4 = new THREE.Line(geometry, material)
+scene.add(orbit4);
+
+var segmentCount = 32,
+    radius = 30,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit5 = new THREE.Line(geometry, material)
+scene.add(orbit5);
+
+var segmentCount = 32,
+    radius = 35,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit6 = new THREE.Line(geometry, material)
+scene.add(orbit6);
+
+var segmentCount = 32,
+    radius = 40,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit7 = new THREE.Line(geometry, material)
+scene.add(orbit7);
+
+var segmentCount = 32,
+    radius = 45,
+    geometry = new THREE.Geometry(),
+    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
+
+for (var i = 0; i <= segmentCount; i++) {
+    var theta = (i / segmentCount) * Math.PI * 2;
+    geometry.vertices.push(
+        new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+orbit8 = new THREE.Line(geometry, material)
+scene.add(orbit8);
+
+
 
 
 //TO-DO: INITIALIZE THE REST OF YOUR PLANETS
@@ -190,6 +329,13 @@ scene.add( sun );
 var clock = new THREE.Clock(true);
 function updateSystem() 
 {
+	sun.rotation.y += 0.02;
+
+	mercury.rotation.y += 0.03;
+
+    mercury.position.x = 20*Math.cos(t) + 0;
+    mercury.position.z = 20*Math.sin(t) + 0;
+	//sun.rotation.set(Math.PI/2.0,0);
 	// ANIMATE YOUR SOLAR SYSTEM HERE.
   
 }
