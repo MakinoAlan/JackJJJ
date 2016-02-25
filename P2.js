@@ -174,18 +174,117 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 
 
 // Create Solar System
-var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+var geometry = new THREE.SphereGeometry( 5 , 32, 32 );
 var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
 var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
 generateVertexColors( geometry );
 //var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-var sun = new THREE.Mesh( geometry, normalMaterial );
-scene.add( sun );
+var sun1 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun1 );
+
+var geometry = new THREE.SphereGeometry( 4.9, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+generateVertexColors( geometry );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun2 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun2 );
+
+var geometry = new THREE.SphereGeometry( 4.9, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+generateVertexColors( geometry );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun3 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun3 );
+
+var geometry = new THREE.SphereGeometry( 4.9, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+generateVertexColors( geometry );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun4 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun4 );
+
+var geometry = new THREE.SphereGeometry( 4.9, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+generateVertexColors( geometry );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun5 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun5 );
+
+var geometry = new THREE.SphereGeometry( 4.9, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+generateVertexColors( geometry );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun6 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun6 );
+
+var geometry = new THREE.SphereGeometry( 4.9, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+generateVertexColors( geometry );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun7 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun7 );
+
+var geometry = new THREE.SphereGeometry( 4.9, 32, 32 );
+var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
+var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+generateVertexColors( geometry );
+//var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sun8 = new THREE.Mesh( geometry, normalMaterial );
+scene.add( sun8 );
 
 var mercuryGeo = new THREE.SphereGeometry(2,15,15);
 var mercuryMat = new THREE.MeshPhongMaterial(); 
 var mercury = new THREE.Mesh(mercuryGeo, mercuryMat); 
 scene.add(mercury); // add Mercury
+mercury.parent = sun1;
+
+var marsGeo = new THREE.SphereGeometry(3,20,20);
+var marsMat = new THREE.MeshPhongMaterial(); 
+var mars = new THREE.Mesh(marsGeo, marsMat); 
+scene.add(mars); // add Mercury
+mars.parent = sun2;
+
+var venusGeo = new THREE.SphereGeometry(1,20,20);
+var venusMat = new THREE.MeshPhongMaterial(); 
+var venus = new THREE.Mesh(venusGeo, venusMat); 
+scene.add(venus); // add Mercury
+venus.parent = sun3;
+
+var earthGeo = new THREE.SphereGeometry(2,20,20);
+var earthMat = new THREE.MeshPhongMaterial(); 
+var earth = new THREE.Mesh(earthGeo, earthMat); 
+scene.add(earth); // add Mercury
+earth.parent = sun4;
+
+var jupiterGeo = new THREE.SphereGeometry(4,30,30);
+var jupiterMat = new THREE.MeshPhongMaterial(); 
+var jupiter = new THREE.Mesh(jupiterGeo, jupiterMat); 
+scene.add(jupiter); // add Mercury
+jupiter.parent = sun5;
+
+var saturnGeo = new THREE.SphereGeometry(3.5,30,30);
+var saturnMat = new THREE.MeshPhongMaterial(); 
+var saturn = new THREE.Mesh(saturnGeo, saturnMat); 
+scene.add(saturn); // add Mercury
+saturn.parent = sun6;
+
+var uranusGeo = new THREE.SphereGeometry(1.5,30,30);
+var uranusMat = new THREE.MeshPhongMaterial(); 
+var uranus = new THREE.Mesh(uranusGeo, uranusMat); 
+scene.add(uranus); // add Mercury
+uranus.parent = sun7;
+
+var neptureGeo = new THREE.SphereGeometry(1.5,30,30);
+var neptureMat = new THREE.MeshPhongMaterial(); 
+var nepture = new THREE.Mesh(neptureGeo, neptureMat); 
+scene.add(nepture); // add Mercury
+nepture.parent = sun8;
 
 var t = 0;
 
@@ -329,12 +428,47 @@ scene.add(orbit8);
 var clock = new THREE.Clock(true);
 function updateSystem() 
 {
-	sun.rotation.y += 0.02;
+	sun1.rotation.y += 0.02;
+	sun2.rotation.y += 0.03;
+	sun3.rotation.y += 0.01;
+	sun4.rotation.y += 0.015;
+	sun5.rotation.y += 0.025;
+	sun6.rotation.y += 0.005;
+	sun7.rotation.y += 0.009;
+	sun8.rotation.y += 0.013;
 
-	mercury.rotation.y += 0.03;
+	mercury.rotation.y += 0.08;
+	mars.rotation.y += 0.05;
+	venus.rotation.y += 0.07;
+	earth.rotation.y += 0.1;
+	jupiter.rotation.y += 0.09;
+	saturn.rotation.y += 0.075;
+	uranus.rotation.y += 0.03;
+	nepture.rotation.y += 0.11;
 
-    mercury.position.x = 20*Math.cos(t) + 0;
-    mercury.position.z = 20*Math.sin(t) + 0;
+    mercury.position.x = 10*Math.cos(t) + 0;
+    mercury.position.z = 10*Math.sin(t) + 0;
+
+    venus.position.x = 15*Math.cos(t) + 0;
+    venus.position.z = 15*Math.sin(t) + 0;
+
+    earth.position.x = 20*Math.cos(t) + 0;
+    earth.position.z = 20*Math.sin(t) + 0;
+
+    mars.position.x = 25*Math.cos(t) + 0;
+    mars.position.z = 25*Math.sin(t) + 0;
+
+    jupiter.position.x = 30*Math.cos(t) + 0;
+    jupiter.position.z = 30*Math.sin(t) + 0;
+
+    saturn.position.x = 35*Math.cos(t) + 0;
+    saturn.position.z = 35*Math.sin(t) + 0;
+
+    uranus.position.x = 40*Math.cos(t) + 0;
+    uranus.position.z = 40*Math.sin(t) + 0;
+
+    nepture.position.x = 45*Math.cos(t) + 0;
+    nepture.position.z = 45*Math.sin(t) + 0;
 	//sun.rotation.set(Math.PI/2.0,0);
 	// ANIMATE YOUR SOLAR SYSTEM HERE.
   
