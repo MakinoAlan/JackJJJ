@@ -286,6 +286,12 @@ var nepture = new THREE.Mesh(neptureGeo, neptureMat);
 scene.add(nepture); // add Mercury
 nepture.parent = sun8;
 
+var moonGeo = new THREE.SphereGeometry(0.5,30,30);
+var moonMat = new THREE.MeshPhongMaterial(); 
+var moon = new THREE.Mesh(moonGeo, moonMat); 
+scene.add(moon); // add Mercury
+moon.parent = earth;
+
 var t = 0;
 
 var segmentCount = 32,
@@ -469,6 +475,9 @@ function updateSystem()
 
     nepture.position.x = 45*Math.cos(t) + 0;
     nepture.position.z = 45*Math.sin(t) + 0;
+
+    moon.position.x = 2*Math.cos(t) + 0;
+    moon.position.z = 2*Math.sin(t) + 0;
 	//sun.rotation.set(Math.PI/2.0,0);
 	// ANIMATE YOUR SOLAR SYSTEM HERE.
   
