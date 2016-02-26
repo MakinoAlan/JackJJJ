@@ -242,8 +242,8 @@ var moon = new THREE.Mesh(moonGeo, planetMat);
 scene.add(moon);
 moon.parent = earth;
 
+// iniate 8 orbits
 var t = 0;
-
 var segmentCount = 32,
     radius = 10,
     geometry = new THREE.Geometry(),
@@ -259,12 +259,8 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit1 = new THREE.Line(geometry, material)
 scene.add(orbit1);
-
 var segmentCount = 32,
-    radius = 15,
-    geometry = new THREE.Geometry(),
-    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
-
+    radius = 15;
 for (var i = 0; i <= segmentCount; i++) {
     var theta = (i / segmentCount) * Math.PI * 2;
     geometry.vertices.push(
@@ -275,12 +271,8 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit2 = new THREE.Line(geometry, material)
 scene.add(orbit2);
-
 var segmentCount = 32,
-    radius = 20,
-    geometry = new THREE.Geometry(),
-    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
-
+    radius = 20;
 for (var i = 0; i <= segmentCount; i++) {
     var theta = (i / segmentCount) * Math.PI * 2;
     geometry.vertices.push(
@@ -291,12 +283,8 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit3 = new THREE.Line(geometry, material)
 scene.add(orbit3);
-
 var segmentCount = 32,
-    radius = 25,
-    geometry = new THREE.Geometry(),
-    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
-
+    radius = 25;
 for (var i = 0; i <= segmentCount; i++) {
     var theta = (i / segmentCount) * Math.PI * 2;
     geometry.vertices.push(
@@ -307,12 +295,8 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit4 = new THREE.Line(geometry, material)
 scene.add(orbit4);
-
 var segmentCount = 32,
-    radius = 30,
-    geometry = new THREE.Geometry(),
-    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
-
+    radius = 30;
 for (var i = 0; i <= segmentCount; i++) {
     var theta = (i / segmentCount) * Math.PI * 2;
     geometry.vertices.push(
@@ -323,12 +307,8 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit5 = new THREE.Line(geometry, material)
 scene.add(orbit5);
-
 var segmentCount = 32,
-    radius = 35,
-    geometry = new THREE.Geometry(),
-    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
-
+    radius = 35;
 for (var i = 0; i <= segmentCount; i++) {
     var theta = (i / segmentCount) * Math.PI * 2;
     geometry.vertices.push(
@@ -339,12 +319,8 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit6 = new THREE.Line(geometry, material)
 scene.add(orbit6);
-
 var segmentCount = 32,
-    radius = 40,
-    geometry = new THREE.Geometry(),
-    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
-
+    radius = 40;
 for (var i = 0; i <= segmentCount; i++) {
     var theta = (i / segmentCount) * Math.PI * 2;
     geometry.vertices.push(
@@ -355,12 +331,8 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit7 = new THREE.Line(geometry, material)
 scene.add(orbit7);
-
 var segmentCount = 32,
-    radius = 45,
-    geometry = new THREE.Geometry(),
-    material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
-
+    radius = 45;
 for (var i = 0; i <= segmentCount; i++) {
     var theta = (i / segmentCount) * Math.PI * 2;
     geometry.vertices.push(
@@ -371,12 +343,6 @@ for (var i = 0; i <= segmentCount; i++) {
 }
 orbit8 = new THREE.Line(geometry, material)
 scene.add(orbit8);
-
-
-
-
-//TO-DO: INITIALIZE THE REST OF YOUR PLANETS
-
 
 //Note: Use of parent attribute IS allowed.
 //Hint: Keep hierarchies in mind! 
