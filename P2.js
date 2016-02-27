@@ -242,6 +242,26 @@ var moon = new THREE.Mesh(moonGeo, planetMat);
 scene.add(moon);
 moon.parent = earth;
 
+
+for (var ra=1;ra<100;ra++){
+var segcount = 32;
+var radius = 3.8+0.01*ra;
+var linegeometry = new THREE.Geometry();
+var linematerial = new THREE.LineBasicMaterial({ color: 0xFFFFFF});
+
+for (var i = 0; i <= segcount; i++) {
+   	var theta = (i / segcount) * Math.PI * 2;
+    linegeometry.vertices.push(
+    	new THREE.Vector3(
+            Math.cos(theta) * radius,0,
+            Math.sin(theta) * radius
+            ));            
+}
+saturnring = new THREE.Line(linegeometry, linematerial)
+scene.add(saturnring);
+saturnring.parent=saturn;
+}
+
 // iniate 8 orbits
 var t = 0;
 var segmentCount = 32,
@@ -397,17 +417,7 @@ function updateSystem()
 var keyboard = new THREEx.KeyboardState();
 var grid_state = false;
 		
-function onKeyDown(event)
-{
-	// TO-DO: BIND KEYS TO YOUR CONTROLS	  
-  if(keyboard.eventMatches(event,"shift+g"))
-  {  // Reveal/Hide helper grid
-    grid_state = !grid_state;
-    grid_state? scene.add(grid) : scene.remove(grid);
-  }   
 
-}
-keyboard.domElement.addEventListener('keydown', onKeyDown );
 		
 
 // SETUP UPDATE CALL-BACK
@@ -416,7 +426,7 @@ keyboard.domElement.addEventListener('keydown', onKeyDown );
 function update() {
   updateSystem();
 
-  requestAnimationFrame(update);
+  test = requestAnimationFrame(update);
   
   // UPDATES THE MULTIPLE CAMERAS IN THE SIMULATION
   for ( var ii = 0; ii < views.length; ++ii ) 
@@ -443,4 +453,26 @@ function update() {
 	}
 }
 
+  var counter = 1;
+function onKeyDown(event)
+{
+  if(keyboard.eventMatches(event,"space")){
+  	if (counter == 1) {
+  	cancelAnimationFrame(test);
+  	counter++;
+  }
+  	else {
+    	requestAnimationFrame(update);
+    	counter = 1;
+  	}
+  }
+	// TO-DO: BIND KEYS TO YOUR CONTROLS	  
+  else if(keyboard.eventMatches(event,"shift+g"))
+  {  // Reveal/Hide helper grid
+    grid_state = !grid_state;
+    grid_state? scene.add(grid) : scene.remove(grid);
+  }   
+
+}
+keyboard.domElement.addEventListener('keydown', onKeyDown );
 update();
