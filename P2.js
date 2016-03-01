@@ -68,7 +68,7 @@ var views = [
 		background: new THREE.Color().setRGB( 0.1, 0.1, 0.1 ),
 		eye: [ 80, 20, 80 ],
 		up: [ 0, 1, 0 ],
-		fov: 45,
+		fov: 65,
 		updateCamera: function ( camera, scene, mouseX, mouseY ) {		}
 	},
 	{
@@ -526,6 +526,70 @@ function update() {
 }
 
   var counter = 1;
+  var camM = 0;
+  var camS = 0;
+function resetCam(m,c){
+    if(m+c==2){
+        camera_MotherShip.position.x = views[0].eye[ 0 ];
+        camera_MotherShip.position.y = views[0].eye[ 1 ];
+        camera_MotherShip.position.z = views[0].eye[ 2 ];
+        camera_MotherShip.up.x = views[0].up[ 0 ];
+        camera_MotherShip.up.y = views[0].up[ 1 ];
+        camera_MotherShip.up.z = views[0].up[ 2 ];
+        camera_MotherShip.lookAt( scene.position );
+        camera_ScoutShip.position.x = views[1].eye[ 0 ];
+        camera_ScoutShip.position.y = views[1].eye[ 1 ];
+        camera_ScoutShip.position.z = views[1].eye[ 2 ];
+        camera_ScoutShip.up.x = views[1].up[ 0 ];
+        camera_ScoutShip.up.y = views[1].up[ 1 ];
+        camera_ScoutShip.up.z = views[1].up[ 2 ];
+        camera_ScoutShip.lookAt( scene.position );
+    }
+    else if(m==1){
+      if(camM==0){
+        camM = 1;
+        camera_MotherShip.position.x = mothershipTorso.position.x;
+        camera_MotherShip.position.y = mothershipTorso.position.y;
+        camera_MotherShip.position.z = mothershipTorso.position.z;
+        camera_MotherShip.up.x = views[0].up[ 0 ];
+        camera_MotherShip.up.y = views[0].up[ 1 ];
+        camera_MotherShip.up.z = views[0].up[ 2 ];
+        camera_MotherShip.lookAt( camera_MotherShip.position );
+      }
+      else{
+        camM = 0;
+        camera_MotherShip.position.x = views[0].eye[ 0 ];
+        camera_MotherShip.position.y = views[0].eye[ 1 ];
+        camera_MotherShip.position.z = views[0].eye[ 2 ];
+        camera_MotherShip.up.x = views[0].up[ 0 ];
+        camera_MotherShip.up.y = views[0].up[ 1 ];
+        camera_MotherShip.up.z = views[0].up[ 2 ];
+        camera_MotherShip.lookAt( scene.position );
+      }
+    }
+    else{
+      if(camS==0){
+        camS = 1;
+        camera_ScoutShip.position.x = scoutshipTorso.position.x;
+        camera_ScoutShip.position.y = scoutshipTorso.position.y;
+        camera_ScoutShip.position.z = scoutshipTorso.position.z;
+        camera_ScoutShip.up.x = views[1].up[ 0 ];
+        camera_ScoutShip.up.y = views[1].up[ 1 ];
+        camera_ScoutShip.up.z = views[1].up[ 2 ];
+        camera_ScoutShip.lookAt( camera_ScoutShip.position);
+      }
+      else{
+        camS = 0;
+        camera_ScoutShip.position.x = views[1].eye[ 0 ];
+        camera_ScoutShip.position.y = views[1].eye[ 1 ];
+        camera_ScoutShip.position.z = views[1].eye[ 2 ];
+        camera_ScoutShip.up.x = views[1].up[ 0 ];
+        camera_ScoutShip.up.y = views[1].up[ 1 ];
+        camera_ScoutShip.up.z = views[1].up[ 2 ];
+        camera_ScoutShip.lookAt( scene.position );
+      }
+    }
+}
 function onKeyDown(event)
 {
   if(keyboard.eventMatches(event,"space")){
@@ -543,7 +607,16 @@ function onKeyDown(event)
   {  // Reveal/Hide helper grid
     grid_state = !grid_state;
     grid_state? scene.add(grid) : scene.remove(grid);
-  }   
+  } 
+  else if (keyboard.eventMatches(event,"o")){
+     resetCam(1,0);
+  } 
+  else if (keyboard.eventMatches(event,"p")){
+     resetCam(0,1);
+  } 
+  else if(keyboard.eventMatches(event,"m")){
+    resetCam(1,1);
+  }  
 
 }
 keyboard.domElement.addEventListener('keydown', onKeyDown );
