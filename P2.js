@@ -203,31 +203,45 @@ scene.add( sun8 );
 
 // iniate 8 planet and set each of them to an unique sun
 var mercuryGeo = new THREE.SphereGeometry(2,15,15);
+var mercurytexture = THREE.ImageUtils.loadTexture( 'mercury.jpg' );
+var mercuryMat = new THREE.MeshBasicMaterial( { map: mercurytexture } );
 var planetMat = new THREE.MeshPhongMaterial(); 
-var mercury = new THREE.Mesh(mercuryGeo, planetMat); 
+var mercury = new THREE.Mesh(mercuryGeo, mercuryMat); 
 scene.add(mercury);
 mercury.parent = sun1;
 var marsGeo = new THREE.SphereGeometry(3,20,20);
-var mars = new THREE.Mesh(marsGeo, planetMat); 
+var marstexture = THREE.ImageUtils.loadTexture( 'mars.jpg' );
+var marsMat = new THREE.MeshBasicMaterial( { map: marstexture } );
+var mars = new THREE.Mesh(marsGeo, marsMat); 
 scene.add(mars);
 mars.parent = sun2;
-var venusGeo = new THREE.SphereGeometry(1,20,20);
-var venus = new THREE.Mesh(venusGeo, planetMat); 
+var venusGeo = new THREE.SphereGeometry(1.5,20,20);
+var venustexture = THREE.ImageUtils.loadTexture( 'venus.jpg' );
+var venusMat = new THREE.MeshBasicMaterial( { map: venustexture } );
+var venus = new THREE.Mesh(venusGeo, venusMat); 
 scene.add(venus);
 venus.parent = sun3;
 var earthGeo = new THREE.SphereGeometry(2,20,20);
-var earth = new THREE.Mesh(earthGeo, planetMat); 
+var earthtexture = THREE.ImageUtils.loadTexture( 'earth.jpg' );
+var earthMat = new THREE.MeshBasicMaterial( { map: earthtexture } );
+var earth = new THREE.Mesh(earthGeo, earthMat); 
 scene.add(earth);
 earth.parent = sun4;
 var jupiterGeo = new THREE.SphereGeometry(4,30,30);
-var jupiter = new THREE.Mesh(jupiterGeo, planetMat); 
+var jupitertexture = THREE.ImageUtils.loadTexture( 'jupiter.jpg' );
+var jupiterMat = new THREE.MeshBasicMaterial( { map: jupitertexture } );
+var jupiter = new THREE.Mesh(jupiterGeo, jupiterMat); 
 scene.add(jupiter);
 jupiter.parent = sun5;
 var saturnGeo = new THREE.SphereGeometry(3.5,30,30);
-var saturn = new THREE.Mesh(saturnGeo, planetMat); 
+var saturntexture = THREE.ImageUtils.loadTexture( 'saturn.jpg' );
+var saturnMat = new THREE.MeshBasicMaterial( { map: saturntexture } );
+var saturn = new THREE.Mesh(saturnGeo, saturnMat); 
 scene.add(saturn);
 saturn.parent = sun6;
 var uranusGeo = new THREE.SphereGeometry(1.5,30,30);
+var jupitertexture = THREE.ImageUtils.loadTexture( 'jupiter.jpg' );
+var jupiterMat = new THREE.MeshBasicMaterial( { map: jupitertexture } );
 var uranus = new THREE.Mesh(uranusGeo, planetMat); 
 scene.add(uranus);
 uranus.parent = sun7;
@@ -242,11 +256,16 @@ var moon = new THREE.Mesh(moonGeo, planetMat);
 scene.add(moon);
 moon.parent = earth;
 
+
+var i = 0;
 // iniate the monthership
 var mothershipTorsoGeo = new THREE.BoxGeometry(10,3,5);
-var mothershipTorsoMatrix = new THREE.Matrix4().set(1,0,0,10, 0,1,0,10, 0,0,1,-10, 0,0,0,1);
+//var mothershipTorsoMatrix = new THREE.Matrix4().set(1,0,0,10, 0,1,0,10, 0,0,1,-10, 0,0,0,1);
 var mothershipTorso = new THREE.Mesh(mothershipTorsoGeo,planetMat);
-mothershipTorso.setMatrix(mothershipTorsoMatrix);
+//mothershipTorso.setMatrix(mothershipTorsoMatrix);
+mothershipTorso.position.x = 30*Math.cos(0) + 0;
+mothershipTorso.position.y = 30*Math.cos(0) + 0;
+mothershipTorso.position.z = 30*Math.sin(0) + 0;
 scene.add(mothershipTorso);
 camera_MotherShip.parent = mothershipTorso;
 
@@ -265,9 +284,13 @@ mothershipWing2.parent = mothershipTorso;
 
 // iniate scoutship
 var scoutshipTorsoGeo = new THREE.BoxGeometry(10,3,5);
-var scoutshipTorsoMatrix = new THREE.Matrix4().set(1,0,0,60, 0,1,0,15, 0,0,1,10, 0,0,0,1);
+//var scoutshipTorsoMatrix = new THREE.Matrix4().set(1,0,0,60, 0,1,0,15, 0,0,1,10, 0,0,0,1);
 var scoutshipTorso = new THREE.Mesh(scoutshipTorsoGeo,planetMat);
-scoutshipTorso.setMatrix(scoutshipTorsoMatrix);
+scoutshipTorso.position.x = 10*Math.cos(0) + 0;
+scoutshipTorso.position.y = 10*Math.cos(0) + 0;
+scoutshipTorso.position.z = 30*Math.sin(0) + 0;
+//scoutshipTorso.position.z = 10*Math.sin(0) + 0;
+//scoutshipTorso.setMatrix(scoutshipTorsoMatrix);
 scene.add(scoutshipTorso);
 
 // trying to set the camera, but not work
