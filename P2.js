@@ -171,7 +171,20 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 /////////////////////////////////
 //   YOUR WORK STARTS BELOW    //
 /////////////////////////////////
-
+  var imagePrefix = "universe";
+  var directions  = ["1", "2", "3", "4", "5", "6"];
+  var imageSuffix = ".jpg";
+  var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 ); 
+  
+  var materialArray = [];
+  for (var i = 0; i < 6; i++)
+    materialArray.push( new THREE.MeshBasicMaterial({
+      map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+      side: THREE.BackSide
+    }));
+  var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+  var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+  scene.add( skyBox );
 
 // Create Solar System
 
@@ -240,16 +253,17 @@ var saturn = new THREE.Mesh(saturnGeo, saturnMat);
 scene.add(saturn);
 saturn.parent = sun6;
 var uranusGeo = new THREE.SphereGeometry(1.5,30,30);
-var jupitertexture = THREE.ImageUtils.loadTexture( 'jupiter.jpg' );
-var jupiterMat = new THREE.MeshBasicMaterial( { map: jupitertexture } );
-var uranus = new THREE.Mesh(uranusGeo, planetMat); 
+var uranustexture = THREE.ImageUtils.loadTexture( 'uranus.jpg' );
+var uranusMat = new THREE.MeshBasicMaterial( { map: uranustexture } );
+var uranus = new THREE.Mesh(uranusGeo, uranusMat); 
 scene.add(uranus);
 uranus.parent = sun7;
-var neptureGeo = new THREE.SphereGeometry(1.5,30,30);
-var nepture = new THREE.Mesh(neptureGeo, planetMat); 
+var neptureGeo = new THREE.SphereGeometry(1.5,30,30); 
+var nepturetexture = THREE.ImageUtils.loadTexture( 'neptune.jpg' );
+var neptureMat = new THREE.MeshBasicMaterial( { map: nepturetexture } );
+var nepture = new THREE.Mesh(neptureGeo, neptureMat); 
 scene.add(nepture);
 nepture.parent = sun8;
-
 // iniate moon
 var moonGeo = new THREE.SphereGeometry(0.5,30,30);
 var moon = new THREE.Mesh(moonGeo, planetMat); 
@@ -260,8 +274,9 @@ moon.parent = earth;
 var i = 0;
 // iniate the monthership
 var mothershipTorsoGeo = new THREE.BoxGeometry(10,3,5);
+var shipMaterial = new THREE.MeshNormalMaterial();
 //var mothershipTorsoMatrix = new THREE.Matrix4().set(1,0,0,10, 0,1,0,10, 0,0,1,-10, 0,0,0,1);
-var mothershipTorso = new THREE.Mesh(mothershipTorsoGeo,planetMat);
+var mothershipTorso = new THREE.Mesh(mothershipTorsoGeo,shipMaterial);
 //mothershipTorso.setMatrix(mothershipTorsoMatrix);
 mothershipTorso.position.x = 30*Math.cos(0) + 0;
 mothershipTorso.position.y = 30*Math.cos(0) + 0;
@@ -272,8 +287,8 @@ camera_MotherShip.parent = mothershipTorso;
 var mothershipWingGeo = new THREE.BoxGeometry(4,1,6);
 var mothershipWing1Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
 var mothershipWing2Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-5, 0,0,0,1);
-var mothershipWing1 = new THREE.Mesh(mothershipWingGeo,planetMat);
-var mothershipWing2 = new THREE.Mesh(mothershipWingGeo,planetMat);
+var mothershipWing1 = new THREE.Mesh(mothershipWingGeo,shipMaterial);
+var mothershipWing2 = new THREE.Mesh(mothershipWingGeo,shipMaterial);
 mothershipWing1.setMatrix(mothershipWing1Matrix);
 mothershipWing2.setMatrix(mothershipWing2Matrix);
 scene.add(mothershipWing1);
@@ -285,7 +300,7 @@ mothershipWing2.parent = mothershipTorso;
 // iniate scoutship
 var scoutshipTorsoGeo = new THREE.BoxGeometry(10,3,5);
 //var scoutshipTorsoMatrix = new THREE.Matrix4().set(1,0,0,60, 0,1,0,15, 0,0,1,10, 0,0,0,1);
-var scoutshipTorso = new THREE.Mesh(scoutshipTorsoGeo,planetMat);
+var scoutshipTorso = new THREE.Mesh(scoutshipTorsoGeo,shipMaterial);
 scoutshipTorso.position.x = 10*Math.cos(0) + 0;
 scoutshipTorso.position.y = 10*Math.cos(0) + 0;
 scoutshipTorso.position.z = 30*Math.sin(0) + 0;
@@ -305,8 +320,8 @@ camera_ScoutShip.parent = scoutshipTorso;
 var scoutshipWingGeo = new THREE.BoxGeometry(4,1,6);
 var scoutshipWing1Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
 var scoutshipWing2Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-5, 0,0,0,1);
-var scoutshipWing1 = new THREE.Mesh(scoutshipWingGeo,planetMat);
-var scoutshipWing2 = new THREE.Mesh(scoutshipWingGeo,planetMat);
+var scoutshipWing1 = new THREE.Mesh(scoutshipWingGeo,shipMaterial);
+var scoutshipWing2 = new THREE.Mesh(scoutshipWingGeo,shipMaterial);
 scoutshipWing1.setMatrix(scoutshipWing1Matrix);
 scoutshipWing2.setMatrix(scoutshipWing2Matrix);
 scene.add(scoutshipWing1);
