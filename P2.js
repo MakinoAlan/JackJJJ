@@ -242,6 +242,55 @@ var moon = new THREE.Mesh(moonGeo, planetMat);
 scene.add(moon);
 moon.parent = earth;
 
+// iniate the monthership
+var mothershipTorsoGeo = new THREE.BoxGeometry(10,3,5);
+var mothershipTorsoMatrix = new THREE.Matrix4().set(1,0,0,10, 0,1,0,10, 0,0,1,-10, 0,0,0,1);
+var mothershipTorso = new THREE.Mesh(mothershipTorsoGeo,planetMat);
+mothershipTorso.setMatrix(mothershipTorsoMatrix);
+scene.add(mothershipTorso);
+camera_MotherShip.parent = mothershipTorso;
+
+var mothershipWingGeo = new THREE.BoxGeometry(4,1,6);
+var mothershipWing1Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
+var mothershipWing2Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-5, 0,0,0,1);
+var mothershipWing1 = new THREE.Mesh(mothershipWingGeo,planetMat);
+var mothershipWing2 = new THREE.Mesh(mothershipWingGeo,planetMat);
+mothershipWing1.setMatrix(mothershipWing1Matrix);
+mothershipWing2.setMatrix(mothershipWing2Matrix);
+scene.add(mothershipWing1);
+scene.add(mothershipWing2);
+mothershipWing1.parent = mothershipTorso;
+mothershipWing2.parent = mothershipTorso;
+
+
+// iniate scoutship
+var scoutshipTorsoGeo = new THREE.BoxGeometry(10,3,5);
+var scoutshipTorsoMatrix = new THREE.Matrix4().set(1,0,0,60, 0,1,0,15, 0,0,1,10, 0,0,0,1);
+var scoutshipTorso = new THREE.Mesh(scoutshipTorsoGeo,planetMat);
+scoutshipTorso.setMatrix(scoutshipTorsoMatrix);
+scene.add(scoutshipTorso);
+
+// trying to set the camera, but not work
+/*
+camera_ScoutShipMatrix = new THREE.Matrix4().set(1,0,0,-65, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+camera_ScoutShip.setMatrix(camera_ScoutShipMatrix);
+camera_ScoutShip.parent = scoutshipTorso;
+*/
+
+//scoutshipTorso.parent = sun2;
+
+var scoutshipWingGeo = new THREE.BoxGeometry(4,1,6);
+var scoutshipWing1Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
+var scoutshipWing2Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-5, 0,0,0,1);
+var scoutshipWing1 = new THREE.Mesh(scoutshipWingGeo,planetMat);
+var scoutshipWing2 = new THREE.Mesh(scoutshipWingGeo,planetMat);
+scoutshipWing1.setMatrix(scoutshipWing1Matrix);
+scoutshipWing2.setMatrix(scoutshipWing2Matrix);
+scene.add(scoutshipWing1);
+scene.add(scoutshipWing2);
+scoutshipWing1.parent = scoutshipTorso;
+scoutshipWing2.parent = scoutshipTorso;
+
 
 for (var ra=1;ra<100;ra++){
 var segcount = 32;
