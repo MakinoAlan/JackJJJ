@@ -726,7 +726,7 @@ function onKeyDown(event)
   }
   else if (keyboard.eventMatches(event,"g")){
     ablook = 3; alert("enter geosync mode");
-    GeoOrbit(control,3);
+    GeoOrbit(control,2);
   }
   else if(keyboard.eventMatches(event,"shift+x")){
     if(ablook == 1){abslook(control,"x",-step);}
@@ -806,6 +806,12 @@ function onKeyDown(event)
     if(ablook == 3){GeoOrbit(control,6);}
   }  else if(keyboard.eventMatches(event,"8")){
     if(ablook == 3){GeoOrbit(control,7);}
+  }
+  else if(keyboard.eventMatches(event,"shift+w")){
+    camera_ScoutShip.fov += 10;
+  }
+  else if (keyboard.eventMatches(event,"w")){
+    camera_ScoutShip.fov -=10;
   }
 
 
