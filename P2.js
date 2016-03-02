@@ -171,6 +171,61 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 /////////////////////////////////
 //   YOUR WORK STARTS BELOW    //
 /////////////////////////////////
+
+// Some helper functions
+///////////////////////////////////////////////////////////////////////////////////////////////////
+function getRotMatrix(p, axis){
+  switch(axis)
+  {case "x":
+  var MyObject = new THREE.Matrix4().set(1,      0,         0,           0, 
+                                            0,         Math.cos(p),-Math.sin(p), 0, 
+                                            0,         Math.sin(p), Math.cos(p), 0,
+                                            0,         0,           0,           1);
+  return MyObject;
+  break;
+
+  case "y":
+  var MyObject = new THREE.Matrix4().set(Math.cos(p),        0,         -Math.sin(p),          0, 
+                                              0,        1,         0,                     0, 
+                                  -Math.sin(p),         0,         Math.cos(p),           0,
+                                              0,        0,         0,                     1);
+  return MyObject;
+  break;
+
+  case "z":
+  var MyObject = new THREE.Matrix4().set(Math.cos(p),       -Math.sin(p),         0,        0, 
+                                 Math.sin(p),       Math.cos(p),          0,        0, 
+                                            0,                    0,        1,        0,
+                                            0,                    0,        0,        1);
+  return MyObject;
+  break;
+
+
+  default:
+  break;
+
+  }
+
+}
+
+function getscaleMatrix(Myx,Myy,Myz){
+  var MyObject = new THREE.Matrix4().set(Myx,0,0,0, 0,Myy,0,0, 0,0,Myz,0, 0,0,0,1);
+  return MyObject;
+}
+
+function gettransMatrix(Myx,Myy,Myz){
+  var MyObject = new THREE.Matrix4().set(1,0,0,Myx, 0,1,0,Myy, 0,0,1,Myz, 0,0,0,1);
+  return MyObject;
+}
+
+function multiplyHelper(par1,par2){
+  var MyObject = new THREE.Matrix4().multiplyMatrices(par1,par2);
+  return MyObject;
+}
+/////////////////////////////////////////////////////////////////////////////////
+
+// set background
+/////////////////////////////////////////////////////////////////////////////////
   var imagePrefix = "universe";
   var directions  = ["1", "2", "3", "4", "5", "6"];
   var imageSuffix = ".jpg";
@@ -185,19 +240,16 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
   var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
   var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
   scene.add( skyBox );
-
-// Create Solar System
+///////////////////////////////////////////////////////////////////////////////////
 
 // initate 8 sun
-// chinese version:
-// 创建8个太阳，一个大的 七个小的
-// 然后每一个行星parent不同的太阳，这样就能简单的修改每个行星的绕行速度了：修改太阳的自转速度即可
 var geometry = new THREE.SphereGeometry( 5 , 32, 32 );
 var texture = THREE.ImageUtils.loadTexture( 'sun.jpg' );
 var normalMaterial = new THREE.MeshBasicMaterial( { map: texture } );
 generateVertexColors( geometry );
 var sun1 = new THREE.Mesh( geometry, normalMaterial );
 scene.add( sun1 );
+
 var geometry1 = new THREE.SphereGeometry( 4.9, 32, 32 );
 var sun2 = new THREE.Mesh( geometry1, normalMaterial );
 scene.add( sun2 );
@@ -215,58 +267,83 @@ var sun8 = new THREE.Mesh( geometry1, normalMaterial );
 scene.add( sun8 );
 
 // iniate 8 planet and set each of them to an unique sun
+var testMatrix = getscaleMatrix(1,1,1);
+
 var mercuryGeo = new THREE.SphereGeometry(2,15,15);
 var mercurytexture = THREE.ImageUtils.loadTexture( 'mercury.jpg' );
 var mercuryMat = new THREE.MeshBasicMaterial( { map: mercurytexture } );
-var planetMat = new THREE.MeshPhongMaterial(); 
+var mercuryMatrix = gettransMatrix(0,0,10);
+mercurymatrix = multiplyHelper(testMatrix,mercuryMatrix);
 var mercury = new THREE.Mesh(mercuryGeo, mercuryMat); 
 scene.add(mercury);
-mercury.parent = sun1;
+//mercury.parent = sun1;
+
 var marsGeo = new THREE.SphereGeometry(3,20,20);
 var marstexture = THREE.ImageUtils.loadTexture( 'mars.jpg' );
 var marsMat = new THREE.MeshBasicMaterial( { map: marstexture } );
+var marsMatrix = gettransMatrix(0,0,25);
+marsmatrix = multiplyHelper(testMatrix,marsMatrix);
 var mars = new THREE.Mesh(marsGeo, marsMat); 
 scene.add(mars);
-mars.parent = sun2;
+//mars.parent = sun2;
+
 var venusGeo = new THREE.SphereGeometry(1.5,20,20);
 var venustexture = THREE.ImageUtils.loadTexture( 'venus.jpg' );
 var venusMat = new THREE.MeshBasicMaterial( { map: venustexture } );
+var venusMatrix = gettransMatrix(0,0,15);
+venusmatrix = multiplyHelper(testMatrix,venusMatrix);
 var venus = new THREE.Mesh(venusGeo, venusMat); 
 scene.add(venus);
-venus.parent = sun3;
+//venus.parent = sun3;
+
 var earthGeo = new THREE.SphereGeometry(2,20,20);
 var earthtexture = THREE.ImageUtils.loadTexture( 'earth.jpg' );
 var earthMat = new THREE.MeshBasicMaterial( { map: earthtexture } );
+var earthMatrix = gettransMatrix(0,0,20);
+earthmatrix = multiplyHelper(testMatrix,earthMatrix);
 var earth = new THREE.Mesh(earthGeo, earthMat); 
 scene.add(earth);
-earth.parent = sun4;
+//earth.parent = sun4;
+
 var jupiterGeo = new THREE.SphereGeometry(4,30,30);
 var jupitertexture = THREE.ImageUtils.loadTexture( 'jupiter.jpg' );
 var jupiterMat = new THREE.MeshBasicMaterial( { map: jupitertexture } );
+var jupiterMatrix = gettransMatrix(0,0,30);
+jupitermatrix = multiplyHelper(testMatrix,jupiterMatrix);
 var jupiter = new THREE.Mesh(jupiterGeo, jupiterMat); 
 scene.add(jupiter);
-jupiter.parent = sun5;
+//jupiter.parent = sun5;
+
 var saturnGeo = new THREE.SphereGeometry(3.5,30,30);
 var saturntexture = THREE.ImageUtils.loadTexture( 'saturn.jpg' );
 var saturnMat = new THREE.MeshBasicMaterial( { map: saturntexture } );
+var saturnMatrix = gettransMatrix(0,0,35);
+saturnmatrix = multiplyHelper(testMatrix,saturnMatrix);
 var saturn = new THREE.Mesh(saturnGeo, saturnMat); 
 scene.add(saturn);
-saturn.parent = sun6;
+//saturn.parent = sun6;
+
 var uranusGeo = new THREE.SphereGeometry(1.5,30,30);
 var uranustexture = THREE.ImageUtils.loadTexture( 'uranus.jpg' );
 var uranusMat = new THREE.MeshBasicMaterial( { map: uranustexture } );
+var uranusMatrix = gettransMatrix(0,0,35);
+uranusmatrix = multiplyHelper(testMatrix,uranusMatrix);
 var uranus = new THREE.Mesh(uranusGeo, uranusMat); 
 scene.add(uranus);
-uranus.parent = sun7;
+//uranus.parent = sun7;
+
 var neptureGeo = new THREE.SphereGeometry(1.5,30,30); 
 var nepturetexture = THREE.ImageUtils.loadTexture( 'neptune.jpg' );
 var neptureMat = new THREE.MeshBasicMaterial( { map: nepturetexture } );
+var neptureMatrix = gettransMatrix(0,0,40);
+nepturematrix = multiplyHelper(testMatrix,neptureMatrix);
 var nepture = new THREE.Mesh(neptureGeo, neptureMat); 
 scene.add(nepture);
-nepture.parent = sun8;
+//nepture.parent = sun8;
+
 // iniate moon
 var moonGeo = new THREE.SphereGeometry(0.5,30,30);
-var moon = new THREE.Mesh(moonGeo, planetMat); 
+var moon = new THREE.Mesh(moonGeo, normalMaterial); 
 scene.add(moon);
 moon.parent = earth;
 
@@ -282,7 +359,6 @@ mothershipTorso.position.x = 30*Math.cos(0) + 0;
 mothershipTorso.position.y = 30*Math.cos(0) + 0;
 mothershipTorso.position.z = 30*Math.sin(0) + 0;
 scene.add(mothershipTorso);
-camera_MotherShip.parent = mothershipTorso;
 
 var mothershipWingGeo = new THREE.BoxGeometry(4,1,6);
 var mothershipWing1Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
@@ -304,17 +380,8 @@ var scoutshipTorso = new THREE.Mesh(scoutshipTorsoGeo,shipMaterial);
 scoutshipTorso.position.x = 10*Math.cos(0) + 0;
 scoutshipTorso.position.y = 10*Math.cos(0) + 0;
 scoutshipTorso.position.z = 30*Math.sin(0) + 0;
-//scoutshipTorso.position.z = 10*Math.sin(0) + 0;
 //scoutshipTorso.setMatrix(scoutshipTorsoMatrix);
 scene.add(scoutshipTorso);
-
-// trying to set the camera, but not work
-/*
-camera_ScoutShipMatrix = new THREE.Matrix4().set(1,0,0,-65, 0,1,0,0, 0,0,1,0, 0,0,0,1);
-camera_ScoutShip.setMatrix(camera_ScoutShipMatrix);
-camera_ScoutShip.parent = scoutshipTorso;
-*/
-
 //scoutshipTorso.parent = sun2;
 
 var scoutshipWingGeo = new THREE.BoxGeometry(4,1,6);
@@ -455,6 +522,14 @@ scene.add(orbit8);
 //Hint: Keep hierarchies in mind! 
 
 var clock = new THREE.Clock(true);
+var g1 = 0;
+var g2 = 0;
+var g3 = 0;
+var g4 = 0;
+var g5 = 0;
+var g6 = 0;
+var g7 = 0;
+var g8 = 0;
 function updateSystem() 
 {
 	// set different sun's self rotation speed in order to set planet's rotation speed
@@ -478,24 +553,45 @@ function updateSystem()
 	nepture.rotation.y += 0.11;
 
 	// put planet into their own orbit
-    mercury.position.x = 10*Math.cos(t) + 0;
-    mercury.position.z = 10*Math.sin(t) + 0;
-    venus.position.x = 15*Math.cos(t) + 0;
-    venus.position.z = 15*Math.sin(t) + 0;
-    earth.position.x = 20*Math.cos(t) + 0;
-    earth.position.z = 20*Math.sin(t) + 0;
-    mars.position.x = 25*Math.cos(t) + 0;
-    mars.position.z = 25*Math.sin(t) + 0;
-    jupiter.position.x = 30*Math.cos(t) + 0;
-    jupiter.position.z = 30*Math.sin(t) + 0;
-    saturn.position.x = 35*Math.cos(t) + 0;
-    saturn.position.z = 35*Math.sin(t) + 0;
-    uranus.position.x = 40*Math.cos(t) + 0;
-    uranus.position.z = 40*Math.sin(t) + 0;
-    nepture.position.x = 45*Math.cos(t) + 0;
-    nepture.position.z = 45*Math.sin(t) + 0;
+    //mercury.position.x = 10*Math.cos(t) + 0;
+    //mercury.position.z = 10*Math.sin(t) + 0;
+
+    var rotateY1 = getRotMatrix(g1,"y");
+    var rotateY2 = getRotMatrix(g2,"y");
+    var rotateY3 = getRotMatrix(g3,"y");
+    var rotateY4 = getRotMatrix(g4,"y");
+    var rotateY5 = getRotMatrix(g5,"y");
+    var rotateY6 = getRotMatrix(g6,"y");
+    var rotateY7 = getRotMatrix(g7,"y");
+    var rotateY8 = getRotMatrix(g8,"y");
+
+    var mercuryRot = multiplyHelper(rotateY1,mercurymatrix);
+    mercury.setMatrix(mercuryRot);
+    var venusRot = multiplyHelper(rotateY2,venusmatrix);
+    venus.setMatrix(venusRot);
+    var earthRot = multiplyHelper(rotateY3,earthmatrix);
+    earth.setMatrix(earthRot);
+    var marsRot = multiplyHelper(rotateY4,marsmatrix);
+    mars.setMatrix(marsRot);
+    var jupiterRot = multiplyHelper(rotateY5,jupitermatrix);
+    jupiter.setMatrix(jupiterRot);
+    var saturnRot = multiplyHelper(rotateY6,saturnmatrix);
+    saturn.setMatrix(saturnRot);
+    var uranusRot = multiplyHelper(rotateY7,uranusmatrix);
+    uranus.setMatrix(uranusRot);
+    var neptureRot = multiplyHelper(rotateY8,nepturematrix);
+    nepture.setMatrix(neptureRot);
     moon.position.x = 2*Math.cos(t) + 0;
     moon.position.z = 2*Math.sin(t) + 0;
+
+    g1 -= 0.01;
+    g2 -= 0.015;
+    g3 -= 0.03;
+    g4 -= 0.05;
+    g5 -= 0.02;
+    g6 -= 0.018;
+    g7 -= 0.04;
+    g8 -= 0.035;
   
 }
 
@@ -605,6 +701,9 @@ function resetCam(m,c){
       }
     }
 }
+function testfn(){
+    alert(JSON.stringify(mercury.position))
+}
 function onKeyDown(event)
 {
   if(keyboard.eventMatches(event,"space")){
@@ -630,7 +729,7 @@ function onKeyDown(event)
      resetCam(0,1);
   } 
   else if(keyboard.eventMatches(event,"m")){
-    resetCam(1,1);
+    testfn();
   }  
 
 }
