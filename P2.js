@@ -174,38 +174,12 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 
 // Some helper functions
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-function getRotMatrix(p, axis){
-  switch(axis)
-  {case "x":
-  var MyObject = new THREE.Matrix4().set(1,      0,         0,           0, 
-                                            0,         Math.cos(p),-Math.sin(p), 0, 
-                                            0,         Math.sin(p), Math.cos(p), 0,
-                                            0,         0,           0,           1);
-  return MyObject;
-  break;
-
-  case "y":
+function getRotMatrix(p){
   var MyObject = new THREE.Matrix4().set(Math.cos(p),        0,         -Math.sin(p),          0, 
-                                              0,        1,         0,                     0, 
-                                  Math.sin(p),         0,         Math.cos(p),           0,
-                                              0,        0,         0,                     1);
+                                         0,                  1,         0,                     0, 
+                                         Math.sin(p),        0,         Math.cos(p),           0,
+                                         0,                  0,         0,                     1);
   return MyObject;
-  break;
-
-  case "z":
-  var MyObject = new THREE.Matrix4().set(Math.cos(p),       -Math.sin(p),         0,        0, 
-                                 Math.sin(p),       Math.cos(p),          0,        0, 
-                                            0,                    0,        1,        0,
-                                            0,                    0,        0,        1);
-  return MyObject;
-  break;
-
-
-  default:
-  break;
-
-  }
-
 }
 
 function getscaleMatrix(Myx,Myy,Myz){
@@ -532,50 +506,53 @@ var g7 = 0;
 var g8 = 0;
 function updateSystem() 
 {
-	// set different sun's self rotation speed in order to set planet's rotation speed
 	sun1.rotation.y += 0.02;
 
-	// set planets' self rotation speed
-	mercury.rotation.y += 0.08;
-  venus.rotation.y += 0.07;
-  earth.rotation.y += 0.1;
-	mars.rotation.y += 0.05;
-	jupiter.rotation.y += 0.09;
-	saturn.rotation.y += 0.075;
-	uranus.rotation.y += 0.03;
-	nepture.rotation.y += 0.11;
+    var rotateY1 = getRotMatrix(g1);
+    var rotateY2 = getRotMatrix(g2);
+    var rotateY3 = getRotMatrix(g3);
+    var rotateY4 = getRotMatrix(g4);
+    var rotateY5 = getRotMatrix(g5);
+    var rotateY6 = getRotMatrix(g6);
+    var rotateY7 = getRotMatrix(g7);
+    var rotateY8 = getRotMatrix(g8);
 
-	// put planet into their own orbit
-    //mercury.position.x = 10*Math.cos(t) + 0;
-    //mercury.position.z = 10*Math.sin(t) + 0;
-
-    var rotateY1 = getRotMatrix(g1,"y");
-    var rotateY2 = getRotMatrix(g2,"y");
-    var rotateY3 = getRotMatrix(g3,"y");
-    var rotateY4 = getRotMatrix(g4,"y");
-    var rotateY5 = getRotMatrix(g5,"y");
-    var rotateY6 = getRotMatrix(g6,"y");
-    var rotateY7 = getRotMatrix(g7,"y");
-    var rotateY8 = getRotMatrix(g8,"y");
-
-    var mercuryRot = multiplyHelper(rotateY1,mercurymatrix);
+    var mercurymatrixself=multiplyHelper(mercurymatrix,rotateY1);
+    var mercuryRot = multiplyHelper(rotateY1,mercurymatrixself);
     mercury.setMatrix(mercuryRot);
-    var venusRot = multiplyHelper(rotateY2,venusmatrix);
+    var venusmatrixself=multiplyHelper(venusmatrix,rotateY2);    
+    var venusRot = multiplyHelper(rotateY2,venusmatrixself);
     venus.setMatrix(venusRot);
-    var earthRot = multiplyHelper(rotateY3,earthmatrix);
-    earth.setMatrix(earthRot);
-    var marsRot = multiplyHelper(rotateY4,marsmatrix);
+    var earthmatrixself=multiplyHelper(earthmatrix,rotateY3);     
+    var earthRot = multiplyHelper(rotateY3,earthmatrixself);
+    earth.setMatrix(earthRot); 
+    var marsmatrixself=multiplyHelper(marsmatrix,rotateY4);
+    var marsRot = multiplyHelper(rotateY4,marsmatrixself);
     mars.setMatrix(marsRot);
-    var jupiterRot = multiplyHelper(rotateY5,jupitermatrix);
+    var jupitermatrixself=multiplyHelper(jupitermatrix,rotateY5);    
+    var jupiterRot = multiplyHelper(rotateY5,jupitermatrixself);
     jupiter.setMatrix(jupiterRot);
-    var saturnRot = multiplyHelper(rotateY6,saturnmatrix);
+    var saturnmatrixself=multiplyHelper(saturnmatrix,rotateY6);    
+    var saturnRot = multiplyHelper(rotateY6,saturnmatrixself);
     saturn.setMatrix(saturnRot);
-    var uranusRot = multiplyHelper(rotateY7,uranusmatrix);
+    var uranusmatrixself=multiplyHelper(uranusmatrix,rotateY7);    
+    var uranusRot = multiplyHelper(rotateY7,uranusmatrixself);
     uranus.setMatrix(uranusRot);
-    var neptureRot = multiplyHelper(rotateY8,nepturematrix);
+    var nepturematrixself=multiplyHelper(nepturematrix,rotateY8); 
+    var neptureRot = multiplyHelper(rotateY8,nepturematrixself);
     nepture.setMatrix(neptureRot);
-    moon.position.x = 2*Math.cos(t) + 0;
-    moon.position.z = 2*Math.sin(t) + 0;
+
+    mercury.rotation.y += 0.08;
+    mars.rotation.y += 0.05;
+    venus.rotation.y += 0.07;
+    earth.rotation.y += 0.06;
+    jupiter.rotation.y += 0.09;
+    saturn.rotation.y += 0.075;
+    uranus.rotation.y += 0.03;
+    nepture.rotation.y += 0.11;
+
+    moon.position.x = 4*Math.cos(t) + 0;
+    moon.position.z = 4*Math.sin(t) + 0;
 
     g1 -= 0.01;
     g2 -= 0.015;
@@ -787,6 +764,30 @@ function onKeyDown(event)
   }
   else if(keyboard.eventMatches(event,"k")){
     if(ablook == 1){step++;alert("step =" + step);}
+  }
+  else if(keyboard.eventMatches(event,"shift+q")) {
+    if(ablook == 0) {
+      scene.applyMatrix(gettransMatrix(step,0,0));
+      camera_ScoutShip.lookAt(scene.position);
+      rotObjMatrix = new THREE.Matrix4();
+      var xAxis = new THREE.Vector3(0,1,0);
+      rotObjMatrix.makeRotationAxis(xAxis.normalize(),setp/2);
+      rotObjMatrix.multiply(scoutshipTorso.matrix);
+      scoutshipTorso.matrix = rotObjMatrix;
+      scoutshipTorso.rotation.setFromRotationMatrix(scoutshipTorso.matrix);
+    }
+  }
+  else if(keyboard.eventMatches(event,"q")){
+    if(ablook == 0) {
+      scene.applyMatrix(gettransMatrix(-step,0,0));
+      camera_ScoutShip.lookAt(scene.position);
+      rotObjMatrix = new THREEE.Matrix4();
+      var xAxis = new THREE.Vector3(0,1,0);
+      rotObjMatrix.makeRotationAxis(xAxis.normalize(),setp/10);
+      rotObjMatrix.multiply(scoutshipTorso.matrix);
+      scoutshipTorso.matrix = rotObjMatrix;
+      scoutshipTorso.rotation.setFromRotationMatrix(scoutshipTorso.matrix);
+    }
   }
   else if(keyboard.eventMatches(event,"1")){
     if(ablook == 3){GeoOrbit(control,0);}
