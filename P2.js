@@ -68,7 +68,7 @@ var views = [
 		background: new THREE.Color().setRGB( 0.1, 0.1, 0.1 ),
 		eye: [ 80, 20, 80 ],
 		up: [ 0, 1, 0 ],
-		fov: 40,
+		fov: 45,
 		updateCamera: function ( camera, scene, mouseX, mouseY ) {		}
 	},
 	{
@@ -187,7 +187,7 @@ function getRotMatrix(p, axis){
   case "y":
   var MyObject = new THREE.Matrix4().set(Math.cos(p),        0,         -Math.sin(p),          0, 
                                               0,        1,         0,                     0, 
-                                  -Math.sin(p),         0,         Math.cos(p),           0,
+                                  Math.sin(p),         0,         Math.cos(p),           0,
                                               0,        0,         0,                     1);
   return MyObject;
   break;
@@ -355,9 +355,9 @@ var shipMaterial = new THREE.MeshNormalMaterial();
 //var mothershipTorsoMatrix = new THREE.Matrix4().set(1,0,0,10, 0,1,0,10, 0,0,1,-10, 0,0,0,1);
 var mothershipTorso = new THREE.Mesh(mothershipTorsoGeo,shipMaterial);
 //mothershipTorso.setMatrix(mothershipTorsoMatrix);
-mothershipTorso.position.x = 30*Math.cos(0) + 0;
-mothershipTorso.position.y = 30*Math.cos(0) + 0;
-mothershipTorso.position.z = 30*Math.sin(0) + 0;
+mothershipTorso.position.x = 80*Math.cos(0) + 0;
+mothershipTorso.position.y = 20*Math.cos(0) + 0;
+mothershipTorso.position.z = 80*Math.sin(0) + 0;
 scene.add(mothershipTorso);
 
 var mothershipWingGeo = new THREE.BoxGeometry(4,1,6);
@@ -374,19 +374,19 @@ mothershipWing2.parent = mothershipTorso;
 
 
 // iniate scoutship
-var scoutshipTorsoGeo = new THREE.BoxGeometry(10,3,5);
+var scoutshipTorsoGeo = new THREE.BoxGeometry(2,2,2);
 //var scoutshipTorsoMatrix = new THREE.Matrix4().set(1,0,0,60, 0,1,0,15, 0,0,1,10, 0,0,0,1);
 var scoutshipTorso = new THREE.Mesh(scoutshipTorsoGeo,shipMaterial);
-scoutshipTorso.position.x = 10*Math.cos(0) + 0;
-scoutshipTorso.position.y = 10*Math.cos(0) + 0;
-scoutshipTorso.position.z = 30*Math.sin(0) + 0;
+scoutshipTorso.position.x = 65;
+scoutshipTorso.position.y = 20;
+scoutshipTorso.position.z = 65;
 //scoutshipTorso.setMatrix(scoutshipTorsoMatrix);
 scene.add(scoutshipTorso);
 //scoutshipTorso.parent = sun2;
 
-var scoutshipWingGeo = new THREE.BoxGeometry(4,1,6);
-var scoutshipWing1Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
-var scoutshipWing2Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-5, 0,0,0,1);
+var scoutshipWingGeo = new THREE.BoxGeometry(1,1,1);
+var scoutshipWing1Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,2, 0,0,0,1);
+var scoutshipWing2Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-2, 0,0,0,1);
 var scoutshipWing1 = new THREE.Mesh(scoutshipWingGeo,shipMaterial);
 var scoutshipWing2 = new THREE.Mesh(scoutshipWingGeo,shipMaterial);
 scoutshipWing1.setMatrix(scoutshipWing1Matrix);
@@ -630,73 +630,77 @@ function update() {
 }
 
   var counter = 1;
-  var camM = 0;
-  var camS = 0;
-function resetCam(m,c){
-    if(m+c==2){
-        camera_MotherShip.position.x = views[0].eye[ 0 ];
-        camera_MotherShip.position.y = views[0].eye[ 1 ];
-        camera_MotherShip.position.z = views[0].eye[ 2 ];
-        camera_MotherShip.up.x = views[0].up[ 0 ];
-        camera_MotherShip.up.y = views[0].up[ 1 ];
-        camera_MotherShip.up.z = views[0].up[ 2 ];
-        camera_MotherShip.lookAt( scene.position );
-        camera_ScoutShip.position.x = views[1].eye[ 0 ];
-        camera_ScoutShip.position.y = views[1].eye[ 1 ];
-        camera_ScoutShip.position.z = views[1].eye[ 2 ];
-        camera_ScoutShip.up.x = views[1].up[ 0 ];
-        camera_ScoutShip.up.y = views[1].up[ 1 ];
-        camera_ScoutShip.up.z = views[1].up[ 2 ];
-        camera_ScoutShip.lookAt( scene.position );
-    }
-    else if(m==1){
-      if(camM==0){
-        camM = 1;
-        camera_MotherShip.position.x = mothershipTorso.position.x;
-        camera_MotherShip.position.y = mothershipTorso.position.y;
-        camera_MotherShip.position.z = mothershipTorso.position.z;
-        camera_MotherShip.up.x = views[0].up[ 0 ];
-        camera_MotherShip.up.y = views[0].up[ 1 ];
-        camera_MotherShip.up.z = views[0].up[ 2 ];
-        camera_MotherShip.lookAt( camera_MotherShip.position );
-      }
-      else{
-        camM = 0;
-        camera_MotherShip.position.x = views[0].eye[ 0 ];
-        camera_MotherShip.position.y = views[0].eye[ 1 ];
-        camera_MotherShip.position.z = views[0].eye[ 2 ];
-        camera_MotherShip.up.x = views[0].up[ 0 ];
-        camera_MotherShip.up.y = views[0].up[ 1 ];
-        camera_MotherShip.up.z = views[0].up[ 2 ];
-        camera_MotherShip.lookAt( scene.position );
-      }
-    }
-    else{
-      if(camS==0){
-        camS = 1;
-        camera_ScoutShip.position.x = scoutshipTorso.position.x;
-        camera_ScoutShip.position.y = scoutshipTorso.position.y;
-        camera_ScoutShip.position.z = scoutshipTorso.position.z;
-        camera_ScoutShip.up.x = views[1].up[ 0 ];
-        camera_ScoutShip.up.y = views[1].up[ 1 ];
-        camera_ScoutShip.up.z = views[1].up[ 2 ];
-        camera_ScoutShip.lookAt( camera_ScoutShip.position);
-      }
-      else{
-        camS = 0;
-        camera_ScoutShip.position.x = views[1].eye[ 0 ];
-        camera_ScoutShip.position.y = views[1].eye[ 1 ];
-        camera_ScoutShip.position.z = views[1].eye[ 2 ];
-        camera_ScoutShip.up.x = views[1].up[ 0 ];
-        camera_ScoutShip.up.y = views[1].up[ 1 ];
-        camera_ScoutShip.up.z = views[1].up[ 2 ];
-        camera_ScoutShip.lookAt( scene.position );
-      }
-    }
-}
+  
+function resetCam(){
+var view = views[0];
+camera_MotherShip.fov = view.fov;
+camera_MotherShip.aspect = window.innerWidth / window.innerHeight;
+camera_MotherShip.near = 1;
+camera_MotherShip.far = 10000;
+camera_MotherShip.position.x = view.eye[ 0 ];
+camera_MotherShip.position.y = view.eye[ 1 ];
+camera_MotherShip.position.z = view.eye[ 2 ];
+camera_MotherShip.up.x = view.up[ 0 ];
+camera_MotherShip.up.y = view.up[ 1 ];
+camera_MotherShip.up.z = view.up[ 2 ];
+camera_MotherShip.lookAt(scene.position);
+
+view = views[1];
+camera_ScoutShip = new THREE.PerspectiveCamera( view.fov, window.innerWidth / window.innerHeight, 1, 10000 );
+camera_ScoutShip.position.x = view.eye[ 0 ];
+camera_ScoutShip.position.y = view.eye[ 1 ];
+camera_ScoutShip.position.z = view.eye[ 2 ];
+camera_ScoutShip.up.x = view.up[ 0 ];
+camera_ScoutShip.up.y = view.up[ 1 ];
+camera_ScoutShip.up.z = view.up[ 2 ];
+camera_ScoutShip.lookAt(0,0,0);
+}  
 function testfn(){
     alert(JSON.stringify(mercury.position))
 }
+// 0 = mothership, 1 = scoutship
+var control = 0;
+// 0 = not, 1 = direct mode
+var ablook = 0;
+
+function abslook(camnum,op,np){
+  var cam = camera_MotherShip;
+  if (camnum == 1){cam = camera_ScoutShip;}
+  if(op=="x"){
+    cam.position.x+=np;
+  }
+  else if(op=="y"){
+    cam.position.y+=np;
+  }
+  else if(op=="z"){
+    cam.position.z+=np;
+  }
+  else if(op=="a"){
+    scene.position.x = scene.position.x + np;
+    cam.lookAt(scene.position);
+  }
+  else if(op=="b"){
+    scene.position.y = scene.position.y + np;
+    cam.lookAt(scene.position);
+  }
+  else if(op=="c"){
+    scene.position.z = scene.position.z + np;
+    cam.lookAt(scene.position);
+  }
+  else if(op=="d"){
+    cam.up.set(cam.up.x+np,cam.up.y,cam.up.z);
+    cam.lookAt( scene.position );
+  }
+  else if(op=="e"){
+    cam.up.set(cam.up.x,cam.up.y+np,cam.up.z);
+    cam.lookAt( scene.position );
+  }
+  else if(op=="f"){
+    cam.up.set(cam.up.x,cam.up.y,cam.up.z+np);
+    cam.lookAt( scene.position );
+  }  
+}
+var step = 1;
 function onKeyDown(event)
 {
   if(keyboard.eventMatches(event,"space")){
@@ -715,15 +719,82 @@ function onKeyDown(event)
     grid_state = !grid_state;
     grid_state? scene.add(grid) : scene.remove(grid);
   } 
-  else if (keyboard.eventMatches(event,"o")){
-     resetCam(1,0);
+  else if(keyboard.eventMatches(event,"o")){
+    control = 0;
+    alert("Controlling MotherShip");
   } 
-  else if (keyboard.eventMatches(event,"p")){
-     resetCam(0,1);
+  else if(keyboard.eventMatches(event,"p")){
+    control = 1;
+    alert("Controlling ScoutShip");
   } 
-  else if(keyboard.eventMatches(event,"m")){
-    testfn();
+  else if (keyboard.eventMatches(event,"m")){
+    resetCam();
+  }
+  else if (keyboard.eventMatches(event,"i")){
+    if (ablook == 1){ablook = 0;alert("exit absolute mode");}
+    else{ablook = 1; alert("enter absolute mode");}
+  }
+  else if(keyboard.eventMatches(event,"shift+x")){
+    if(ablook == 1){abslook(control,"x",-step);}
+  }
+  else if(keyboard.eventMatches(event,"x")){
+    if(ablook == 1){abslook(control,"x",step);}
+  }
+  else if(keyboard.eventMatches(event,"shift+y")){
+    if(ablook == 1){abslook(control,"y",-step);}
+  }
+  else if(keyboard.eventMatches(event,"y")){
+    if(ablook == 1){abslook(control,"y",step);}
   }  
+  else if(keyboard.eventMatches(event,"shift+z")){
+    if(ablook == 1){abslook(control,"z",-step);}
+  }
+  else if(keyboard.eventMatches(event,"z")){
+    if(ablook == 1){abslook(control,"z",step);}
+  }  
+  else if(keyboard.eventMatches(event,"shift+a")){
+    if(ablook == 1){abslook(control,"a",-step);}
+  }
+  else if(keyboard.eventMatches(event,"a")){
+    if(ablook == 1){abslook(control,"a",step);}
+  }
+  else if(keyboard.eventMatches(event,"shift+b")){
+    if(ablook == 1){abslook(control,"b",-step);}
+  }
+  else if(keyboard.eventMatches(event,"b")){
+    if(ablook == 1){abslook(control,"b",step);}
+  }
+  else if(keyboard.eventMatches(event,"shift+c")){
+    if(ablook == 1){abslook(control,"c",-step);}
+  }
+  else if(keyboard.eventMatches(event,"c")){
+    if(ablook == 1){abslook(control,"c",step);}
+  }
+  else if(keyboard.eventMatches(event,"shift+d")){
+    if(ablook == 1){abslook(control,"d",-step*0.1);}
+  }
+  else if(keyboard.eventMatches(event,"d")){
+    if(ablook == 1){abslook(control,"d",step*0.1);}
+  }
+  else if(keyboard.eventMatches(event,"shift+e")){
+    if(ablook == 1){abslook(control,"e",-step*0.1);}
+  }
+  else if(keyboard.eventMatches(event,"e")){
+    if(ablook == 1){abslook(control,"e",step*0.1);}
+  }
+  else if(keyboard.eventMatches(event,"shift+f")){
+    if(ablook == 1){abslook(control,"f",-step*0.1);}
+  }
+  else if(keyboard.eventMatches(event,"f")){
+    if(ablook == 1){abslook(control,"f",step*0.1);}
+  }
+  else if(keyboard.eventMatches(event,"shift+k")){
+    if(ablook == 1){if(step>1){step--;}alert("step = "+step);}
+  }
+  else if(keyboard.eventMatches(event,"k")){
+    if(ablook == 1){step++;alert("step =" + step);}
+  }
+
 
 }
 keyboard.domElement.addEventListener('keydown', onKeyDown );
