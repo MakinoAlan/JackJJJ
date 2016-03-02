@@ -537,9 +537,9 @@ function updateSystem()
 
 	// set planets' self rotation speed
 	mercury.rotation.y += 0.08;
+  venus.rotation.y += 0.07;
+  earth.rotation.y += 0.1;
 	mars.rotation.y += 0.05;
-	venus.rotation.y += 0.07;
-	earth.rotation.y += 0.1;
 	jupiter.rotation.y += 0.09;
 	saturn.rotation.y += 0.075;
 	uranus.rotation.y += 0.03;
@@ -632,35 +632,14 @@ function update() {
   var counter = 1;
   
 function resetCam(){
-var view = views[0];
-camera_MotherShip.fov = view.fov;
-camera_MotherShip.aspect = window.innerWidth / window.innerHeight;
-camera_MotherShip.near = 1;
-camera_MotherShip.far = 10000;
-camera_MotherShip.position.x = view.eye[ 0 ];
-camera_MotherShip.position.y = view.eye[ 1 ];
-camera_MotherShip.position.z = view.eye[ 2 ];
-camera_MotherShip.up.x = view.up[ 0 ];
-camera_MotherShip.up.y = view.up[ 1 ];
-camera_MotherShip.up.z = view.up[ 2 ];
-camera_MotherShip.lookAt(scene.position);
-
-view = views[1];
-camera_ScoutShip = new THREE.PerspectiveCamera( view.fov, window.innerWidth / window.innerHeight, 1, 10000 );
-camera_ScoutShip.position.x = view.eye[ 0 ];
-camera_ScoutShip.position.y = view.eye[ 1 ];
-camera_ScoutShip.position.z = view.eye[ 2 ];
-camera_ScoutShip.up.x = view.up[ 0 ];
-camera_ScoutShip.up.y = view.up[ 1 ];
-camera_ScoutShip.up.z = view.up[ 2 ];
-camera_ScoutShip.lookAt(0,0,0);
+location.reload();
 }  
 function testfn(){
     alert(JSON.stringify(mercury.position))
 }
 // 0 = mothership, 1 = scoutship
 var control = 0;
-// 0 = not, 1 = direct mode
+// 0 = relative, 1 = direct mode, 3 = geo mode
 var ablook = 0;
 
 function abslook(camnum,op,np){
@@ -701,6 +680,15 @@ function abslook(camnum,op,np){
   }  
 }
 var step = 1;
+function GeoOrbit(camnum,num){
+  var ship = mothershipTorso;
+  var cam = camera_MotherShip;
+  if(camnum == 1){cam = camera_ScoutShip;ship = scoutshipTorso;}
+
+  var planets = [mercury,venus,earth,mars,jupiter,saturn,uranus,nepture];
+  ship.parent = planets[num];
+  cam.parent = planets[num];
+}
 function onKeyDown(event)
 {
   if(keyboard.eventMatches(event,"space")){
@@ -731,8 +719,14 @@ function onKeyDown(event)
     resetCam();
   }
   else if (keyboard.eventMatches(event,"i")){
-    if (ablook == 1){ablook = 0;alert("exit absolute mode");}
-    else{ablook = 1; alert("enter absolute mode");}
+    ablook = 1; alert("enter absolute mode");
+  }
+  else if (keyboard.eventMatches(event,"r")){
+    ablook = 0; alert("enter relative mode");
+  }
+  else if (keyboard.eventMatches(event,"g")){
+    ablook = 3; alert("enter geosync mode");
+    GeoOrbit(control,3);
   }
   else if(keyboard.eventMatches(event,"shift+x")){
     if(ablook == 1){abslook(control,"x",-step);}
@@ -793,6 +787,25 @@ function onKeyDown(event)
   }
   else if(keyboard.eventMatches(event,"k")){
     if(ablook == 1){step++;alert("step =" + step);}
+  }
+  else if(keyboard.eventMatches(event,"1")){
+    if(ablook == 3){GeoOrbit(control,0);}
+  }
+  else if(keyboard.eventMatches(event,"2")){
+    if(ablook == 3){GeoOrbit(control,1);}
+  }
+    else if(keyboard.eventMatches(event,"3")){
+    if(ablook == 3){GeoOrbit(control,2);}
+  }  else if(keyboard.eventMatches(event,"4")){
+    if(ablook == 3){GeoOrbit(control,3);}
+  }  else if(keyboard.eventMatches(event,"5")){
+    if(ablook == 3){GeoOrbit(control,4);}
+  }  else if(keyboard.eventMatches(event,"6")){
+    if(ablook == 3){GeoOrbit(control,5);}
+  }  else if(keyboard.eventMatches(event,"7")){
+    if(ablook == 3){GeoOrbit(control,6);}
+  }  else if(keyboard.eventMatches(event,"8")){
+    if(ablook == 3){GeoOrbit(control,7);}
   }
 
 
