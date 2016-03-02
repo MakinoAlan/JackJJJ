@@ -68,7 +68,7 @@ var views = [
 		background: new THREE.Color().setRGB( 0.1, 0.1, 0.1 ),
 		eye: [ 80, 20, 80 ],
 		up: [ 0, 1, 0 ],
-		fov: 65,
+		fov: 40,
 		updateCamera: function ( camera, scene, mouseX, mouseY ) {		}
 	},
 	{
@@ -534,13 +534,6 @@ function updateSystem()
 {
 	// set different sun's self rotation speed in order to set planet's rotation speed
 	sun1.rotation.y += 0.02;
-	sun2.rotation.y += 0.03;
-	sun3.rotation.y += 0.01;
-	sun4.rotation.y += 0.015;
-	sun5.rotation.y += 0.025;
-	sun6.rotation.y += 0.005;
-	sun7.rotation.y += 0.009;
-	sun8.rotation.y += 0.013;
 
 	// set planets' self rotation speed
 	mercury.rotation.y += 0.08;
